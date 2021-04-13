@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-def scrape(search_query):
+def scrape(search_query, password, username):
     writer = csv.writer(open(parameters.result_file, 'w'))
     writer.writerow(['name', 'job_title', 'schools', 'location', 'ln_url'])
 
@@ -21,11 +21,11 @@ def scrape(search_query):
     sleep(3)
 
     username_input = driver.find_element_by_name('session_key')
-    username_input.send_keys(parameters.username)
+    username_input.send_keys(username)
     sleep(0.5)
 
     password_input = driver.find_element_by_name('session_password')
-    password_input.send_keys(parameters.password)
+    password_input.send_keys(password)
     sleep(0.5)
 
     # click on the sign in button
@@ -36,7 +36,7 @@ def scrape(search_query):
     sleep(5)
 
     search_input = driver.find_element_by_name('q')
-    search_input.send_keys(parameters.search_query)
+    search_input.send_keys(search_query)
     sleep(1)
 
     search_input.send_keys(Keys.RETURN)

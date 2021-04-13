@@ -127,6 +127,8 @@ def main():
 		st.subheader("Search Data")
 
 		search_text = st.text_input ("Paste Link Here")
+		username = st.text_input ("Paste Mail Here")
+		password = st.text_input ("Paste Password Here")
 		text = st.text_area("Paste Text Here")
 
 		# print (name)
@@ -145,7 +147,7 @@ def main():
 		 "Location":"location"}
 
 		if st.button("Search Data"):
-		   scrape(search_text)
+		   scrape(search_text, password, username)
 
 		all_results = []
 		for task in task_option:
