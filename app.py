@@ -125,10 +125,10 @@ def main():
 	elif choice == "Linkedin Extractor":
 #		st.subheader("Linkedin Extractor")
 		st.subheader("Search Data")
-
-		search_text = st.text_input ("Paste Link Here")
+#		site:linkedin.com/in/ AND "python developer" AND "Zürich"
+		search_text = st.text_input("Paste Link Here", value='site:linkedin.com/in/ AND "python developer" AND "Zürich"')
 		username = st.text_input ("Paste Mail Here")
-		password = st.text_input ("Paste Password Here")
+		password = st.text_input ("Paste Password Here", type="password")
 		text = st.text_area("Paste Text Here")
 
 		# print (name)

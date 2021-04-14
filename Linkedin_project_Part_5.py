@@ -56,7 +56,6 @@ def scrape(search_query, password, username):
         sel = Selector(text=driver.page_source)
 
         name = sel.xpath('//title/text()').extract_first().split(' | ')[0]
-        print("Name",name)
         job_title = sel.xpath('//h2/text()').extract_first().strip()
         schools = ', '.join(sel.xpath('//*[contains(@class, "pv-entity__school-name")]/text()').extract())
         location = sel.xpath('//*[@class="t-16 t-black t-normal inline-block"]/text()').extract_first().strip()
@@ -90,5 +89,5 @@ def scrape(search_query, password, username):
     result_df.columns = ['name', 'job_title', 'schools', 'location', 'ln_url']
 
     driver.quit()
-    print(result_df)
+    # print(result_df)
     return result_df
