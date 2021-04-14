@@ -137,30 +137,31 @@ def main():
 		# print (location)
 		# print (ln_url)
 
-		tasks_list = ["Name","Job-Titel","schools","Location","Emails","URLS","Phonenumbers"]
-		task_option = st.sidebar.multiselect("Task",tasks_list,default="Emails")
-		task_mapper = {"Emails":nfx.extract_emails(text),"URLS":nfx.extract_urls(text),
-		"Phonenumbers":nfx.extract_phone_numbers(text),
-		 "Name":"name",
-		 "Job-Titel":"Job-Titel",
-		 "schools":"schools",
-		 "Location":"location"}
 
 		if st.button("Search Data"):
-		   scrape(search_text, password, username)
+		   result_df = scrape(search_text, password, username)
+		   make_downloadable_df (result_df)
+		else:
+			tasks_list = ["Name","Job-Titel","schools","Location","Emails","URLS","Phonenumbers"]
+			task_option = st.sidebar.multiselect("Task",tasks_list,default="Emails")
+			task_mapper = {"Emails":nfx.extract_emails(text),"URLS":nfx.extract_urls(text),
+			"Phonenumbers":nfx.extract_phone_numbers(text),
+			 "Name":"name",
+			 "Job-Titel":"Job-Titel",
+			 "schools":"schools",
+			 "Location":"location"}
+			all_results = []
+			for task in task_option:
+				result = task_mapper[task]
+				# st.write(result)
+				all_results.append(result)
+			st.write(all_results)
 
-		all_results = []
-		for task in task_option:
-			result = task_mapper[task]
-			# st.write(result)
-			all_results.append(result)
-		st.write(all_results)
-
-		with st.beta_expander("Results As DataFrame"):
-			result_df = pd.DataFrame(all_results).T
-			result_df.columns = task_option
-			st.dataframe(result_df)
-			make_downloadable_df(result_df)
+			with st.beta_expander("Results As DataFrame"):
+				result_df = pd.DataFrame(all_results).T
+				result_df.columns = task_option
+				st.dataframe(result_df)
+				make_downloadable_df(result_df)
 
 	elif choice == "Single Extractor":
 		st.subheader("Extract A Single Term")

@@ -4,9 +4,11 @@ from time import sleep
 from parsel import Selector
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+import pandas as pd
 
 
 def scrape(search_query, password, username):
+    all_results = []
     writer = csv.writer(open(parameters.result_file, 'w'))
     writer.writerow(['name', 'job_title', 'schools', 'location', 'ln_url'])
 
@@ -81,5 +83,12 @@ def scrape(search_query, password, username):
             pass
 
         writer.writerow([name, job_title, schools, location, ln_url])
+        result = [name, job_title, schools, location, ln_url]
+        all_results.append (result)
+
+    result_df = pd.DataFrame (all_results)
+    result_df.columns = ['name', 'job_title', 'schools', 'location', 'ln_url']
 
     driver.quit()
+    print(result_df)
+    return result_df
