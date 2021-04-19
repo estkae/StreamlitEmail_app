@@ -10,7 +10,7 @@ import pandas as pd
 def scrape(search_query, password, username):
     all_results = []
     writer = csv.writer(open(parameters.result_file, 'w'))
-    writer.writerow(['name', 'job_title', 'schools', 'location', 'ln_url'])
+    writer.writerow(['name', 'phone', 'job_title', 'schools', 'location', 'ln_url'])
 
     driver = webdriver.Chrome('/Users/karlestermann/PycharmProjects/QlikCoreGui/node_modules/electron-chromedriver/bin/chromedriver')
     #driver.maximize_window()
@@ -49,23 +49,39 @@ def scrape(search_query, password, username):
     profiles = [profile.get_attribute('href') for profile in profiles]
     print("Google Nach",profiles)
     for profile in profiles:
-        print(profile)
+        # print(profile)
         driver.get(profile)
         sleep(5)
 
         sel = Selector(text=driver.page_source)
+        # print("Sel1",sel)
 
         name = sel.xpath('//title/text()').extract_first().split(' | ')[0]
         job_title = sel.xpath('//h2/text()').extract_first().strip()
         schools = ', '.join(sel.xpath('//*[contains(@class, "pv-entity__school-name")]/text()').extract())
-        location = sel.xpath('//*[@class="t-16 t-black t-normal inline-block"]/text()').extract_first().strip()
+        location = sel.xpath('//*[@class="t-16 t-black t-normal inline-block"]/text()').extract_first()
+        if location:
+           location=sel.xpath('//*[@class="t-16 t-black t-normal inline-block"]/text()').extract_first().strip()
         ln_url = driver.current_url
+        if driver.find_element_by_xpath('//*[text()="Kontaktinformationen"]'):
+           driver.find_element_by_xpath('//*[text()="Kontaktinformationen"]').click ()
+        sleep (1)
+        sel = Selector (text=driver.page_source)
+        phone = sel.xpath('//span[contains(@class, "t-14 t-black t-normal")]/text()').extract_first()
+        if phone:
+           phone=sel.xpath('//span[contains(@class, "t-14 t-black t-normal")]/text()').extract_first().strip()
+        # driver.find_element_by_xpath ('//*[text()="Verwerfen"]').click()
+        # sleep (1)
+
+
+        # print ("Phone" , phone)
 
         print('\n')
         print(name)
         print(job_title)
         print(schools)
         print(location)
+        print(phone)
         print(ln_url)
         print('\n')
 
@@ -81,12 +97,12 @@ def scrape(search_query, password, username):
         except:
             pass
 
-        writer.writerow([name, job_title, schools, location, ln_url])
-        result = [name, job_title, schools, location, ln_url]
+        writer.writerow([name, phone, job_title, schools, location, ln_url])
+        result = [name, phone, job_title, schools, location, ln_url]
         all_results.append (result)
 
     result_df = pd.DataFrame (all_results)
-    result_df.columns = ['name', 'job_title', 'schools', 'location', 'ln_url']
+    result_df.columns = ['name', 'phone','job_title', 'schools', 'location', 'ln_url']
 
     driver.quit()
     # print(result_df)

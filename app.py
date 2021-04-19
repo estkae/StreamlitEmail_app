@@ -9,6 +9,7 @@ import neattext.functions as nfx
 # Utils
 import base64
 import time
+import os
 timestr = time.strftime("%Y%m%d-%H%M%S")
 import requests
 from Linkedin_project_Part_5 import scrape
@@ -78,7 +79,7 @@ def main():
 	# """
 	stc.html(custom_title)
 
-	menu = ["Home","Linkedin Extractor","Single Extractor","Bulk Extractor","DataStorage","About"]
+	menu = ["Home","Contact Detail","Linkedin Extractor","Single Extractor","Bulk Extractor","DataStorage","About"]
 	choice = st.sidebar.selectbox("Menu",menu)
 
 	if choice == "Home":
@@ -140,13 +141,15 @@ def main():
 
 		if st.button("Search Data"):
 		   result_df = scrape(search_text, password, username)
+		   st.dataframe (result_df)
 		   make_downloadable_df (result_df)
 		else:
-			tasks_list = ["Name","Job-Titel","schools","Location","Emails","URLS","Phonenumbers"]
+			tasks_list = ["Name", "phone","Job-Titel","schools","Location","Emails","URLS","Phonenumbers"]
 			task_option = st.sidebar.multiselect("Task",tasks_list,default="Emails")
 			task_mapper = {"Emails":nfx.extract_emails(text),"URLS":nfx.extract_urls(text),
 			"Phonenumbers":nfx.extract_phone_numbers(text),
 			 "Name":"name",
+			 "Phone":"phone",
 			 "Job-Titel":"Job-Titel",
 			 "schools":"schools",
 			 "Location":"location"}
@@ -163,6 +166,44 @@ def main():
 				st.dataframe(result_df)
 				make_downloadable_df(result_df)
 
+	elif choice == "Contact Detail":
+		#		st.subheader("Linkedin Extractor")
+		st.subheader ("Search Data")
+		#		site:linkedin.com/in/ AND "python developer" AND "Zürich"
+		search_text = st.text_input ("Paste URL Here" , value='inspirant.ch')
+		# username = st.text_input ("Paste Mail Here")
+		# password = st.text_input ("Paste Password Here" , type="password")
+		text = st.text_area ("Paste Text Here")
+
+		# print (name)
+		# print (job_title)
+		# print (schools)
+		# print (location)
+		# print (ln_url)
+
+
+		if st.button ("Search Data"):
+			# result_df = scrape (search_text , password , username)
+			# Check if New path exists
+			if os.path.exists ("contact_details"):
+				# Change the current working Directory
+				os.chdir ("contact_details")
+				os.system('rm emails.json')
+				cmd ='scrapy crawl gather_details -a domain=inspirant.ch -o emails.json'
+				os.system(cmd)
+				os.chdir('..')
+			else:
+				st.text ("Can't change the Current Working Directory")
+			st.text('Contact Details finished')
+			# st.dataframe (result_df)
+			# make_downloadable_df (result_df)
+			#
+			with st.beta_expander ("Results As DataFrame"):
+				result_df = pd.read_json('contact_details/emails.json')
+				result_df.columns = ['emails','phones','page']
+				st.dataframe (result_df)
+				make_downloadable_df (result_df)
+
 	elif choice == "Single Extractor":
 		st.subheader("Extract A Single Term")
 		text = st.text_area("Paste Text Here")
@@ -177,6 +218,8 @@ def main():
 				results = nfx.extract_emails (text)
 			elif task_option == "Name":
 				results = "name"
+			elif task_option == "Phone":
+				results = "phone"
 			elif task_option == "Job-Titel":
 				results = "Job-Titel"
 			elif task_option == "schools":
