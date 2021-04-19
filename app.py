@@ -199,9 +199,10 @@ def main():
 				# Change the current working Directory
 				os.chdir ("contact_details")
 				os.system("rm emails.json")
-				cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
-				os.system(cmd)
+				# cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
+				# os.system(cmd)
 				os.chdir("..")
+				# print(os.environ)
 			else:
 				st.text ("Can't change the Current Working Directory")
 			st.text('Contact Details finished !')
