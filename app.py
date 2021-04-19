@@ -202,7 +202,7 @@ def main():
 				# cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
 				# os.system(cmd)
 				os.chdir("..")
-				# print(os.environ)
+				print(os.environ)
 			else:
 				st.text ("Can't change the Current Working Directory")
 			st.text('Contact Details finished !')
