@@ -54,3 +54,4 @@ class GatherDetailsSpider (scrapy.Spider):
                         yield response.follow (link , callback=self.parse)
                     except:
                         pass
+

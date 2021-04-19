@@ -13,6 +13,7 @@ import os
 timestr = time.strftime("%Y%m%d-%H%M%S")
 import requests
 from Linkedin_project_Part_5 import scrape
+# from contact_details/contact_details/spiders/gather_details import GatherDetailsSpider
 
 # Fxn to Download
 def make_downloadable(data,task_type):
@@ -185,13 +186,22 @@ def main():
 		if st.button ("Search Data"):
 			# result_df = scrape (search_text , password , username)
 			# Check if New path exists
+			# from scrapy.crawler import CrawlerProcess
+			#
+			# c = CrawlerProcess ({
+			# 	'USER_AGENT': 'Mozilla/5.0' ,
+			# 	'FEED_FORMAT': 'json' ,
+			# 	'FEED_URI': 'emails.json' ,
+			# })
+			# c.crawl (gather_details)
+			# c.start ()
 			if os.path.exists ("contact_details"):
 				# Change the current working Directory
 				os.chdir ("contact_details")
-				os.system('rm emails.json')
-				cmd ='scrapy crawl gather_details -a domain='+ search_text + ' -o emails.json'
+				os.system("rm emails.json")
+				cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
 				os.system(cmd)
-				os.chdir('..')
+				os.chdir("..")
 			else:
 				st.text ("Can't change the Current Working Directory")
 			st.text('Contact Details finished !')
