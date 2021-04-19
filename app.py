@@ -194,7 +194,7 @@ def main():
 				os.chdir('..')
 			else:
 				st.text ("Can't change the Current Working Directory")
-			st.text('Contact Details finished')
+			st.text('Contact Details finished !')
 			# st.dataframe (result_df)
 			# make_downloadable_df (result_df)
 			#
