@@ -197,7 +197,7 @@ def main():
 			# c.start ()
 			if os.path.exists ("contact_details"):
 				# Change the current working Directory
-				print (os.uname())
+				st.text(os.uname())
 				#
 				# os.chdir("contact_details")
 				# os.system("rm emails.json")
