@@ -189,7 +189,7 @@ def main():
 				# Change the current working Directory
 				os.chdir ("contact_details")
 				os.system('rm emails.json')
-				cmd ='scrapy crawl gather_details -a domain=inspirant.ch -o emails.json'
+				cmd ='scrapy crawl gather_details -a domain='+ search_text + ' -o emails.json'
 				os.system(cmd)
 				os.chdir('..')
 			else:
