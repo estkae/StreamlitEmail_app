@@ -197,12 +197,13 @@ def main():
 			# c.start ()
 			if os.path.exists ("contact_details"):
 				# Change the current working Directory
-				os.chdir ("contact_details")
-				os.system("rm emails.json")
-				# cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
-				# os.system(cmd)
-				os.chdir("..")
-				print(os.environ)
+				print (os.uname())
+				#
+				# os.chdir("contact_details")
+				# os.system("rm emails.json")
+				# # cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
+				# # os.system(cmd)
+				# os.chdir("..")
 			else:
 				st.text ("Can't change the Current Working Directory")
 			st.text('Contact Details finished !')
