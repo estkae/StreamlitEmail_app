@@ -1,6 +1,6 @@
 streamlit==0.80.0
 requests==2.24.0
-scrapy==2.5.0
+scrapy
 pandas==1.2.3
 tld==0.12.5
 selenium==3.141.0
