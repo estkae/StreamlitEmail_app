@@ -197,18 +197,20 @@ def main():
 			# c.start ()
 			if os.path.exists ("contact_details"):
 				# Change the current working Directory
-				st.text(os.uname())
-				st.text(os.getcwd())
+				# st.text(os.uname())
+				# st.text(os.getcwd())
 				import subprocess
 				variable = 'contact_details'
-				subprocess.call("cd " + variable + "| pwd", shell=True)
+				# subprocess.call("cd " + variable + "| pwd", shell=True)
 				variable = 'contact_details/emails.json'
 				subprocess.call("rm " + variable, shell=True)
+				os.chdir("contact_details")
+				cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
+				st.text (cp)
+				os.chdir("..")
 			#
-				# os.chdir("contact_details")
-				# os.system("rm emails.json")
-				# # cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
-				# # os.system(cmd)
+				#cmd ="contact_details/scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
+				#subprocess.call("scrapy crawl gather_details", shell=True)
 				# os.chdir("..")
 			else:
 				st.text ("Can't change the Current Working Directory")
