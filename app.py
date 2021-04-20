@@ -13,6 +13,7 @@ import os
 timestr = time.strftime("%Y%m%d-%H%M%S")
 import requests
 from Linkedin_project_Part_5 import scrape
+from gather_details import startparse
 # from contact_details/contact_details/spiders/gather_details import GatherDetailsSpider
 
 # Fxn to Download
@@ -200,18 +201,19 @@ def main():
 				# st.text(os.uname())
 				# st.text(os.getcwd())
 				import subprocess
-				variable = 'contact_details'
+				# variable = 'contact_details'
 				# subprocess.call("cd " + variable + "| pwd", shell=True)
-				variable = 'contact_details/emails.json'
-				subprocess.call("rm " + variable, shell=True)
-				os.chdir("contact_details")
-				cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
-				st.text (cp)
-				os.chdir("..")
-			#
-				#cmd ="contact_details/scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
+				# variable = 'contact_details/emails.json'
+				# subprocess.call("rm " + variable, shell=True)
+				# os.chdir("contact_details")
+				# cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
+				# st.text (cp)
+				# os.chdir("..")
+			    #
+				#cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
 				#subprocess.call("scrapy crawl gather_details", shell=True)
 				# os.chdir("..")
+				startparse(search_text)
 			else:
 				st.text ("Can't change the Current Working Directory")
 			st.text('Contact Details finished !')
@@ -219,7 +221,7 @@ def main():
 			# make_downloadable_df (result_df)
 			#
 			with st.beta_expander ("Results As DataFrame"):
-				result_df = pd.read_json('contact_details/emails.json')
+				result_df = pd.read_json('emails.json')
 				result_df.columns = ['emails','phones','page']
 				st.dataframe (result_df)
 				make_downloadable_df (result_df)
