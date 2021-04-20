@@ -9,11 +9,17 @@ import neattext.functions as nfx
 # Utils
 import base64
 import time
+# -*- coding: utf-8 -*-
+import scrapy
+import re
+from tld import get_tld
+from scrapy.crawler import CrawlerProcess
+
 import os
 timestr = time.strftime("%Y%m%d-%H%M%S")
 import requests
 from Linkedin_project_Part_5 import scrape
-from gather_details import startparse
+# from gather_details import startparse
 # from contact_details/contact_details/spiders/gather_details import GatherDetailsSpider
 
 # Fxn to Download
@@ -74,6 +80,63 @@ conn = sqlite3.connect('emails_data.db')
 
 def main():
 	"""Email Extraction Streamlit App"""
+	# class GatherDetailsSpider (scrapy.Spider):
+	# 	name = 'gather_details'
+	# 	greedy = True
+	# 	domain = ''
+	# 	# custom_settings = {'DOWNLOD_DELAY': 1}
+	# 	email_regex = re.compile (r"[-.a-z]+@[^@\s\.]+\.[.a-z]{2,3}")
+	# 	forbidden_keys = ['tel:' , 'mailto:' , '.jpg' , '.pdf' , '.png']
+	# 	allowed_domains = [f'{domain}']
+	# 	start_urls = [f'https://{domain}']
+	#
+	# 	# def __init__(self , domain):
+	# 	#     print ("init")
+	# 	#     self.allowed_domains = [f'{domain}']
+	# 	#     self.start_urls = [f'https://{domain}']
+	# 	#     super ().__init__
+	#
+	# 	def parse(self , response):
+	# 		try:
+	# 			html = response.body.decode ('utf-8')
+	# 		except UnicodeDecodeError:
+	# 			return
+	# 		emails = []
+	# 		phones = []
+	# 		print ("parse")
+	# 		# Find mailto's
+	# 		mailtos = response.xpath ("//a[starts-with(@href, 'mailto')]/@href").getall ()
+	# 		tels = response.xpath ("//a[starts-with(@href, 'tel:')]/@href").getall ()
+	# 		phones += [tel.replace ("tel:" , "") for tel in tels]
+	# 		emails = [mail.replace ('mailto:' , '') for mail in mailtos]
+	# 		body_emails = self.email_regex.findall (html)
+	# 		emails += [email for email in body_emails if \
+	# 				   get_tld ('https://' + email.split ('@')[-1] , fail_silently=True)]
+	# 		yield {
+	# 			'emails': list (set (emails)) ,
+	# 			'phones': list (set (phones)) ,
+	# 			'page': response.request.url
+	# 		}
+	# 		if self.greedy:
+	# 			links = response.xpath ("//a/@href").getall ()
+	# 			# If there are external links, scrapy will block them
+	# 			# because of the allowed_domains setting
+	# 			for link in links:
+	# 				skip = False
+	# 				for key in self.forbidden_keys:
+	# 					if key in link:
+	# 						skip = True
+	# 						break
+	# 				if skip:
+	# 					continue
+	# 				try:
+	# 					yield scrapy.Request (link , callback=self.parse)
+	# 				except ValueError:
+	# 					try:
+	# 						yield response.follow (link , callback=self.parse)
+	# 					except:
+	# 						pass
+
 	st.title("Email Extractor App")
 	# custom_banner  = """<div>
 	# <span style="color:red;font-size:30px">E</span>
@@ -196,26 +259,37 @@ def main():
 			# })
 			# c.crawl (gather_details)
 			# c.start ()
-			if os.path.exists ("contact_details"):
-				# Change the current working Directory
-				# st.text(os.uname())
-				# st.text(os.getcwd())
-				import subprocess
-				# variable = 'contact_details'
-				# subprocess.call("cd " + variable + "| pwd", shell=True)
-				# variable = 'contact_details/emails.json'
-				# subprocess.call("rm " + variable, shell=True)
-				# os.chdir("contact_details")
-				# cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
-				# st.text (cp)
-				# os.chdir("..")
-			    #
-				#cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
-				#subprocess.call("scrapy crawl gather_details", shell=True)
-				# os.chdir("..")
-				startparse(search_text)
-			else:
-				st.text ("Can't change the Current Working Directory")
+			# if os.path.exists ("contact_details"):
+			# 	# Change the current working Directory
+			# 	# st.text(os.uname())
+			# 	# st.text(os.getcwd())
+			import subprocess
+			variable = 'gather_details.py'
+			# 	# subprocess.call("cd " + variable + "| pwd", shell=True)
+			# 	# variable = 'contact_details/emails.json'
+			subprocess.call("python " + variable, shell=True)
+			# 	# os.chdir("contact_details")
+			# 	# cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
+			# 	# st.text (cp)
+			# 	# os.chdir("..")
+			#     #
+			# 	#cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
+			# 	#subprocess.call("scrapy crawl gather_details", shell=True)
+			# 	# os.chdir("..")
+			# 	startparse(search_text)
+			# else:
+			# 	st.text ("Can't change the Current Working Directory")
+			# print ("initparse")
+			# process = CrawlerProcess (settings={
+			# 	"FEEDS": {
+			# 		"emails.json": {"format": "json"} ,
+			# 	} ,
+			# 	'USER_AGENT': 'Mozilla/5.0' ,
+			# })
+			# GatherDetailsSpider.domain = search_text
+			# print (search_text)
+			# process.crawl (GatherDetailsSpider)
+			# process.start ()
 			st.text('Contact Details finished !')
 			# st.dataframe (result_df)
 			# make_downloadable_df (result_df)
@@ -292,5 +366,6 @@ def main():
 	else:
 		st.subheader("About")
 
+
 if __name__ == '__main__':
-		main()
+	main()

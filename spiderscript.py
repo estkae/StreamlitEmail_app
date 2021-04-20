@@ -18,7 +18,7 @@ class QuotesSpider(scrapy.Spider):
 
 process = CrawlerProcess(settings={
     "FEEDS": {
-        "out.json": {"format": "json"},
+        "emails.json": {"format": "json"},
     },
 })
 process.crawl(QuotesSpider)

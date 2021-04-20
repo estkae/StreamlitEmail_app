@@ -10,7 +10,7 @@ from scrapy.settings import Settings
 class GatherDetailsSpider (scrapy.Spider):
     name = 'gather_details'
     greedy = True
-    domain = ''
+    domain = 'inspirant.ch'
     # custom_settings = {'DOWNLOD_DELAY': 1}
     email_regex = re.compile (r"[-.a-z]+@[^@\s\.]+\.[.a-z]{2,3}")
     forbidden_keys = ['tel:' , 'mailto:' , '.jpg' , '.pdf' , '.png']
@@ -74,13 +74,15 @@ class GatherDetailsSpider (scrapy.Spider):
 # process.crawl(GatherDetailsSpider)
 # process.start()
 
-def startparse(domains):
-    process = CrawlerProcess (settings={
-        "FEEDS": {
-            "emails.json": {"format": "json"} ,
-        } ,
-        'USER_AGENT': 'Mozilla/5.0' ,
-    })
-    GatherDetailsSpider.domain = domains
-    process.crawl (GatherDetailsSpider)
-    process.start ()
+# def startparse(domains):
+print ("initparse")
+process = CrawlerProcess (settings={
+    "FEEDS": {
+        "emails.json": {"format": "json"} ,
+    } ,
+    'USER_AGENT': 'Mozilla/5.0' ,
+})
+# GatherDetailsSpider.domain = domains
+# print (domains)
+process.crawl (GatherDetailsSpider)
+process.start ()
