@@ -198,7 +198,13 @@ def main():
 			if os.path.exists ("contact_details"):
 				# Change the current working Directory
 				st.text(os.uname())
-				#
+				st.text(os.getcwd())
+				import subprocess
+				variable = 'contact_details'
+				subprocess.call("cd " + variable + "| pwd", shell=True)
+				variable = 'contact_details/emails.json'
+				subprocess.call("rm " + variable, shell=True)
+			#
 				# os.chdir("contact_details")
 				# os.system("rm emails.json")
 				# # cmd ="scrapy crawl gather_details -a domain="+ search_text + " -o emails.json"
