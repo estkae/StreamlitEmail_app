@@ -264,11 +264,12 @@ def main():
 			# 	# st.text(os.uname())
 			# 	# st.text(os.getcwd())
 			import subprocess
+			import sys
 			variable = 'gather_details.py'
 			# 	# subprocess.call("cd " + variable + "| pwd", shell=True)
 			# 	# variable = 'contact_details/emails.json'
 			subprocess.call("rm " + "emails.json", shell=True)
-			subprocess.call("python " + variable + " " + search_text, shell=True)
+			subprocess.call(f"{sys.executable} " + variable + " " + search_text, shell=True)
 
 			# 	# os.chdir("contact_details")
 			# 	# cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
