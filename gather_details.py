@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
-from tld import get_tld
 import scrapy
+from tld import get_tld
 from scrapy.crawler import CrawlerProcess
 import sys
 from scrapy import Selector
