@@ -9,6 +9,7 @@ import neattext.functions as nfx
 # Utils
 import base64
 import time
+import sys
 # -*- coding: utf-8 -*-
 import scrapy
 import re
@@ -268,7 +269,7 @@ def main():
 			# 	# subprocess.call("cd " + variable + "| pwd", shell=True)
 			# 	# variable = 'contact_details/emails.json'
 			subprocess.call("rm " + "emails.json", shell=True)
-			subprocess.call("python " + variable + " " + search_text, shell=True)
+			subprocess.call(f"{sys.executable} " + variable + " " + search_text, shell=True)
 
 			# 	# os.chdir("contact_details")
 			# 	# cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
