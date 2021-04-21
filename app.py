@@ -267,7 +267,9 @@ def main():
 			variable = 'gather_details.py'
 			# 	# subprocess.call("cd " + variable + "| pwd", shell=True)
 			# 	# variable = 'contact_details/emails.json'
-			subprocess.call("python " + variable, shell=True)
+			subprocess.call("rm " + "emails.json", shell=True)
+			subprocess.call("python " + variable + " " + search_text, shell=True)
+
 			# 	# os.chdir("contact_details")
 			# 	# cp = subprocess.call(["scrapy crawl gather_details -a domain="+ search_text +" -o emails.json"], shell=True)
 			# 	# st.text (cp)
@@ -295,10 +297,13 @@ def main():
 			# make_downloadable_df (result_df)
 			#
 			with st.beta_expander ("Results As DataFrame"):
-				result_df = pd.read_json('emails.json')
-				result_df.columns = ['emails','phones','page']
-				st.dataframe (result_df)
-				make_downloadable_df (result_df)
+				if os.stat("emails.json").st_size == 0:
+					st.text ('No entry !')
+				else:
+					result_df = pd.read_json('emails.json')
+					result_df.columns = ['emails','phones','page']
+					st.dataframe (result_df)
+					make_downloadable_df (result_df)
 
 	elif choice == "Single Extractor":
 		st.subheader("Extract A Single Term")

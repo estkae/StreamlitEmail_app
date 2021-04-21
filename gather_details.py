@@ -3,6 +3,8 @@ import scrapy
 import re
 from tld import get_tld
 from scrapy.crawler import CrawlerProcess
+import sys
+from scrapy import Selector
 from scrapy.utils.project import get_project_settings
 from scrapy.settings import Settings
 
@@ -10,12 +12,14 @@ from scrapy.settings import Settings
 class GatherDetailsSpider (scrapy.Spider):
     name = 'gather_details'
     greedy = True
-    domain = 'inspirant.ch'
+    # domain = 'inspirant.ch'
+    print ("Klasse ",sys.argv[1])
+
     # custom_settings = {'DOWNLOD_DELAY': 1}
     email_regex = re.compile (r"[-.a-z]+@[^@\s\.]+\.[.a-z]{2,3}")
     forbidden_keys = ['tel:' , 'mailto:' , '.jpg' , '.pdf' , '.png']
-    allowed_domains = [f'{domain}']
-    start_urls = [f'https://{domain}']
+    allowed_domains = [f'{sys.argv[1]}']
+    start_urls = [f'https://{sys.argv[1]}']
 
     # def __init__(self , domain):
     #     print ("init")
@@ -76,13 +80,19 @@ class GatherDetailsSpider (scrapy.Spider):
 
 # def startparse(domains):
 print ("initparse")
+ # Modul sys wird importiert:
+#import sys
+
+# Iteration über sämtliche Argumente:
+# for eachArg in sys.argv:
+#         print (eachArg)
 process = CrawlerProcess (settings={
     "FEEDS": {
         "emails.json": {"format": "json"} ,
     } ,
     'USER_AGENT': 'Mozilla/5.0' ,
 })
-# GatherDetailsSpider.domain = domains
-# print (domains)
+print ("start Gather_detail")
 process.crawl (GatherDetailsSpider)
+# GatherDetailsSpider.domain = sys.argv[1]
 process.start ()
