@@ -13,8 +13,16 @@ def scrape(search_query, password, username):
     writer = csv.writer(open(parameters.result_file, 'w'))
     writer.writerow(['name', 'phone', 'job_title', 'schools', 'location', 'ln_url'])
     options = Options ()
-    options.add_argument ('--headless')
-    driver = webdriver.Chrome ('./chromedriver')  # Optional
+    # options.add_argument ("--headless")
+    options.add_argument ("--no-sandbox")
+    options.add_argument ("--disable-dev-shm-usage")
+    options.add_argument ("--disable-gpu")
+    options.add_argument ("--disable-features=NetworkService")
+    options.add_argument ("--window-size=1920x1080")
+    options.add_argument ("--disable-features=VizDisplayCompositor")
+    driver = webdriver.Chrome (options=options , service_log_path='selenium.log')
+
+    # driver = webdriver.Chrome ('./chromedriver')  # Optional
     # driver = webdriver.Chrome('/Users/karlestermann/PycharmProjects/QlikCoreGui/node_modules/electron-chromedriver/bin/chromedriver')
     # driver = webdriver.Chrome('chromedriver')
     #driver.maximize_window()
