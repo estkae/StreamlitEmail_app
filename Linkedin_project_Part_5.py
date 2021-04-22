@@ -14,7 +14,7 @@ def scrape(search_query, password, username):
     writer.writerow(['name', 'phone', 'job_title', 'schools', 'location', 'ln_url'])
     options = Options ()
     options.add_argument ('--headless')
-    driver = webdriver.Chrome ('chromedriver')  # Optional
+    driver = webdriver.Chrome ('./chromedriver')  # Optional
     # driver = webdriver.Chrome('/Users/karlestermann/PycharmProjects/QlikCoreGui/node_modules/electron-chromedriver/bin/chromedriver')
     # driver = webdriver.Chrome('chromedriver')
     #driver.maximize_window()
