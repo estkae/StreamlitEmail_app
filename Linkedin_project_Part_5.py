@@ -4,6 +4,7 @@ from time import sleep
 from parsel import Selector
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 import pandas as pd
 
 
@@ -11,8 +12,11 @@ def scrape(search_query, password, username):
     all_results = []
     writer = csv.writer(open(parameters.result_file, 'w'))
     writer.writerow(['name', 'phone', 'job_title', 'schools', 'location', 'ln_url'])
-
-    driver = webdriver.Chrome('/Users/karlestermann/PycharmProjects/QlikCoreGui/node_modules/electron-chromedriver/bin/chromedriver')
+    options = Options ()
+    options.add_argument ('--headless')
+    driver = webdriver.Chrome ('chromedriver' , chrome_options=options)  # Optional
+    # driver = webdriver.Chrome('/Users/karlestermann/PycharmProjects/QlikCoreGui/node_modules/electron-chromedriver/bin/chromedriver')
+    # driver = webdriver.Chrome('chromedriver')
     #driver.maximize_window()
     sleep(0.5)
 
