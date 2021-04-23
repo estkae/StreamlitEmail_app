@@ -12,15 +12,25 @@ def scrape(search_query, password, username):
     all_results = []
     writer = csv.writer(open(parameters.result_file, 'w'))
     writer.writerow(['name', 'phone', 'job_title', 'schools', 'location', 'ln_url'])
-    options = Options ()
-    # options.add_argument ("--headless")
-    options.add_argument ("--no-sandbox")
-    options.add_argument ("--disable-dev-shm-usage")
-    options.add_argument ("--disable-gpu")
-    options.add_argument ("--disable-features=NetworkService")
-    options.add_argument ("--window-size=1920x1080")
-    options.add_argument ("--disable-features=VizDisplayCompositor")
-    driver = webdriver.Chrome (options=options , service_log_path='selenium.log')
+    # Streamlit.io Chromdriver start
+    # options = Options ()
+    # # options.add_argument ("--headless")
+    # options.add_argument ("--no-sandbox")
+    # options.add_argument ("--disable-dev-shm-usage")
+    # options.add_argument ("--disable-gpu")
+    # options.add_argument ("--disable-features=NetworkService")
+    # options.add_argument ("--window-size=1920x1080")
+    # options.add_argument ("--disable-features=VizDisplayCompositor")
+    # driver = webdriver.Chrome (options=options , service_log_path='selenium.log')
+    # Streamlit.io Chromdriver end
+    # Parameter for Heroku Start
+    chrome_options = Options ()
+    chrome_options.binary_location = GOOGLE_CHROME_BIN
+    chrome_options.add_argument ('--disable-gpu')
+    chrome_options.add_argument ('--no-sandbox')
+    driver = webdriver.Chrome (executable_path=CHROMEDRIVER_PATH , chrome_options=chrome_options)
+    # Parameter for Heroku End
+
 
     # driver = webdriver.Chrome ('./chromedriver')  # Optional
     # driver = webdriver.Chrome('/Users/karlestermann/PycharmProjects/QlikCoreGui/node_modules/electron-chromedriver/bin/chromedriver')
