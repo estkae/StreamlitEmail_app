@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
+import os
 
 
 def scrape(search_query, password, username):
@@ -25,7 +26,7 @@ def scrape(search_query, password, username):
     # Streamlit.io Chromdriver end
     # Parameter for Heroku Start
     chrome_options = Options ()
-    chrome_options.binary_location = GOOGLE_CHROME_BIN
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN") #GOOGLE_CHROME_BIN
     chrome_options.add_argument ('--disable-gpu')
     chrome_options.add_argument ('--no-sandbox')
     driver = webdriver.Chrome (executable_path=CHROMEDRIVER_PATH , chrome_options=chrome_options)
