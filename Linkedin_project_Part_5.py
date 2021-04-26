@@ -45,6 +45,7 @@ def scrape(search_query, password, username):
 
     driver.get('https://www.linkedin.com/')
     sleep(5)
+    print(driver.page_source)
 
     driver.find_element_by_xpath('//a[text()="Einloggen"]').click()
     sleep(3)
