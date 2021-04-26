@@ -30,7 +30,9 @@ def scrape(search_query, password, username):
     chrome_options.add_argument ('--disable-gpu')
     chrome_options.add_argument ('--no-sandbox')
     chrome_options.add_argument ('--disable-dev-shm-usage')
-    chrome_options.add_argument ("--remote-debugging-port=9222")  # this
+    chrome_options.add_argument ('--disable-extensions')
+    chrome_options.add_argument ('--single-process')
+    chrome_options.add_argument ('--remote-debugging-port=9222')  # this
     driver = webdriver.Chrome (executable_path=os.environ.get("CHROMEDRIVER_PATH") , chrome_options=chrome_options)
     # Parameter for Heroku End
 
