@@ -34,6 +34,7 @@ def scrape(search_query, password, username):
     chrome_options.add_argument ('--disable-extensions')
     chrome_options.add_argument ('--single-process')
     chrome_options.add_argument ('--enable-input')
+    chrome_options.add_argument ('window-size=1200x1040')
     chrome_options.add_argument ('--remote-debugging-port=9222')  # this
     driver = webdriver.Chrome (executable_path=os.environ.get("CHROMEDRIVER_PATH") , chrome_options=chrome_options)
     # Parameter for Heroku End
