@@ -265,6 +265,7 @@ def main():
 			# 	# st.text(os.uname())
 			# 	# st.text(os.getcwd())
 			import subprocess
+			import sys
 			variable = 'gather_details.py'
 			# 	# subprocess.call("cd " + variable + "| pwd", shell=True)
 			# 	# variable = 'contact_details/emails.json'
